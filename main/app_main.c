@@ -216,19 +216,6 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 			}
         }
 
-        else if(strcmp(read_topic, "ESP_control/delay") == 0) {
-        	GLOBAL_DELAY = atoi(event->data);	//	convert char* to float variable
-
-			if(GLOBAL_DELAY > MAX_DELAY) {
-				GLOBAL_DELAY = MAX_DELAY;
-			}
-			else if(GLOBAL_DELAY < MIN_DELAY) {
-				GLOBAL_DELAY = MIN_DELAY;
-			}
-
-			ESP_LOGI(TAG, "DELAY SELECTED: %d", GLOBAL_DELAY);
-        }
-
         else if(strcmp(read_topic, "ESP_CAM/photo") == 0) {
         	if(strcmp(read_data, "capture") == 0) {
 				// Function to take a photo
@@ -383,7 +370,7 @@ esp_err_t	init_camera()
 {
 	esp_err_t		ret;
 
-	//initialize the camera
+	// Initialize the camera
 	ret = esp_camera_init(&camera_config);
 	if (ret != ESP_OK) {
 		ESP_LOGE(TAG, "Camera Init Failed: %x", ret);
@@ -398,9 +385,11 @@ esp_err_t	init_camera()
 
 
 /**
- * Function for enable SPIFFS external storage. This enables the storage in a external flash.
+ * @brief		Function for enable SPIFFS external storage. This enables the storage in a external flash.
+ *
  */
-esp_err_t SPIFFS_external_storage(char * partition_label, char * base_path) {
+esp_err_t SPIFFS_external_storage(char * partition_label, char * base_path)
+{
 	ESP_LOGI(TAG, "Initializing SPIFFS file system");
 
 	esp_vfs_spiffs_conf_t conf = {
@@ -410,8 +399,6 @@ esp_err_t SPIFFS_external_storage(char * partition_label, char * base_path) {
 		.format_if_mount_failed = true
 	};
 
-	// Use settings defined above to initialize and mount SPIFFS filesystem.
-	// Note: esp_vfs_spiffs_register is an all-in-one convenience function.
 	esp_err_t ret = esp_vfs_spiffs_register(&conf);
 
 	if (ret != ESP_OK) {
@@ -533,7 +520,9 @@ void app_main(void)
 
     esp_mqtt_client_config_t mqtt_cfg = {
 			.uri = CONFIG_BROKER_URL,
+			.out_buffer_size = 4096,
 		};
+
 	#if CONFIG_BROKER_URL_FROM_STDIN
 		char line[128];
 
