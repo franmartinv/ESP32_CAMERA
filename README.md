@@ -1,59 +1,24 @@
-# ESP-MQTT sample application
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+# ESP32-Camera
 
-This example connects to the broker URI selected using `idf.py menuconfig` (using mqtt tcp transport) and as a demonstration subscribes/unsubscribes and send a message on certain topic.
-(Please note that the public broker is maintained by the community so may not be always available, for details please see this [disclaimer](https://iot.eclipse.org/getting-started/#sandboxes))
+This project was done for implement in ESP32-CAM modules following the realization of my Final Degree Project in Electronic Industry and Automatic Engineering at University of Almería (Spain).
 
-Note: If the URI equals `FROM_STDIN` then the broker address is read from stdin upon application startup (used for testing)
+You can see the project of each sensor in my Github profile!
 
-It uses ESP-MQTT library which implements mqtt client to connect to mqtt broker.
+Name: Francisco Martín Villegas
 
-## How to use example
+Year: 2021-2022
 
-### Hardware Required
+Email: f.martinvillegas00@gmail.com
 
-This example can be executed on any ESP32 board, the only required interface is WiFi and connection to internet.
 
-### Configure the project
+## Menuconfig configuration
 
-* Open the project configuration menu (`idf.py menuconfig`)
-* Configure Wi-Fi or Ethernet under "Example Connection Configuration" menu. See "Establishing Wi-Fi or Ethernet Connection" section in [examples/protocols/README.md](../../README.md) for more details.
-* When using Make build system, set `Default serial port` under `Serial flasher config`.
+This project is based on MQTT TCP example for ESP-IDF v4.4, because I need that the MQTT and Wifi protocols were good configured.
 
-### Build and Flash
+In this case you must enter in menuconfig to edit the Wifi SSID and password and the MQTT broker url.
 
-Build the project and flash it to the board, then run monitor tool to view serial output:
+Just open your ESP-IDF terminal, go with (`cd C:\.....`) to your projects' directory and type (`idf.py menuconfig`). You can change these here.
 
-```
-idf.py -p PORT flash monitor
-```
+It's very important to enable SPIRAM for correct operation of the camera. Choose use 80 MHz of SPIRAM too!!
 
-(To exit the serial monitor, type ``Ctrl-]``.)
-
-See the Getting Started Guide for full steps to configure and use ESP-IDF to build projects.
-
-## Example Output
-
-```
-I (3714) event: sta ip: 192.168.0.139, mask: 255.255.255.0, gw: 192.168.0.2
-I (3714) system_api: Base MAC address is not set, read default base MAC address from BLK0 of EFUSE
-I (3964) MQTT_CLIENT: Sending MQTT CONNECT message, type: 1, id: 0000
-I (4164) MQTT_EXAMPLE: MQTT_EVENT_CONNECTED
-I (4174) MQTT_EXAMPLE: sent publish successful, msg_id=41464
-I (4174) MQTT_EXAMPLE: sent subscribe successful, msg_id=17886
-I (4174) MQTT_EXAMPLE: sent subscribe successful, msg_id=42970
-I (4184) MQTT_EXAMPLE: sent unsubscribe successful, msg_id=50241
-I (4314) MQTT_EXAMPLE: MQTT_EVENT_PUBLISHED, msg_id=41464
-I (4484) MQTT_EXAMPLE: MQTT_EVENT_SUBSCRIBED, msg_id=17886
-I (4484) MQTT_EXAMPLE: sent publish successful, msg_id=0
-I (4684) MQTT_EXAMPLE: MQTT_EVENT_SUBSCRIBED, msg_id=42970
-I (4684) MQTT_EXAMPLE: sent publish successful, msg_id=0
-I (4884) MQTT_CLIENT: deliver_publish, message_length_read=19, message_length=19
-I (4884) MQTT_EXAMPLE: MQTT_EVENT_DATA
-TOPIC=/topic/qos0
-DATA=data
-I (5194) MQTT_CLIENT: deliver_publish, message_length_read=19, message_length=19
-I (5194) MQTT_EXAMPLE: MQTT_EVENT_DATA
-TOPIC=/topic/qos0
-DATA=data
-```
+Only enjoy it!! And ask me on my email if you have a question!!
