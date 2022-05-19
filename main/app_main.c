@@ -42,13 +42,13 @@
 extern "C" {
 #endif
 
-#define				number_samples		5
+#define				number_samples			5
 #define				MAX_DELAY			3600000		// 3600000 	milliseconds = 3600 seconds = 1 hour
 #define				MIN_DELAY			5000		// 5000		milliseconds = 5	seconds
 #define				DELAY_SIZE			20
 #define				TIMEZONE			2		// timezone-zone for spain: UTC +2
 #define				YEAR_OFFSET			1900
-#define				MONTH_OFFSET		1
+#define				MONTH_OFFSET			1
 
 static const char 		*TAG = "ESP_CAM_MQTT";
 static	int			GLOBAL_DELAY		=		MIN_DELAY;
