@@ -283,7 +283,7 @@
         "height": 0,
         "gtype": "gage",
         "title": "Temperature",
-        "label": "º C",
+        "label": "ยบ C",
         "format": "{{value}}",
         "min": "-40",
         "max": "85",
@@ -337,7 +337,7 @@
         "height": 0,
         "gtype": "gage",
         "title": "Temperature",
-        "label": "º C",
+        "label": "ยบ C",
         "format": "{{value}}",
         "min": "-40",
         "max": "85",
@@ -391,7 +391,7 @@
         "height": 0,
         "gtype": "gage",
         "title": "Temperature",
-        "label": "º C",
+        "label": "ยบ C",
         "format": "{{value}}",
         "min": "-40",
         "max": "85",
@@ -418,7 +418,7 @@
         "height": 0,
         "gtype": "gage",
         "title": "Temperature",
-        "label": "º C",
+        "label": "ยบ C",
         "format": "{{value}}",
         "min": "-40",
         "max": "85",
@@ -1007,7 +1007,7 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 250,
+        "x": 240,
         "y": 1160,
         "wires": [
             [
@@ -1125,7 +1125,7 @@
         "createDir": false,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 630,
+        "x": 620,
         "y": 1160,
         "wires": [
             []
@@ -1141,7 +1141,7 @@
         "createDir": false,
         "overwriteFile": "false",
         "encoding": "none",
-        "x": 620,
+        "x": 610,
         "y": 1220,
         "wires": [
             []
@@ -1273,7 +1273,8 @@
             [
                 "2e890e8635438b78",
                 "d1990aff502d83d5",
-                "a4b25c06c04549ab"
+                "a4b25c06c04549ab",
+                "0b60b16ab570634f"
             ]
         ]
     },
@@ -1378,7 +1379,7 @@
         "type": "ui_template",
         "z": "04bc6f12557dfa13",
         "group": "955b55d5e2732a9a",
-        "name": "",
+        "name": "See photo in Dashboard",
         "order": 0,
         "width": "0",
         "height": "0",
@@ -1388,10 +1389,68 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 960,
+        "x": 1010,
         "y": 1420,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "0b60b16ab570634f",
+        "type": "function",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "func": "msg = {\n    attachments : {\n        filename: 'photo.jpg',\n        path: 'C:/Users/fmart/Desktop/Datos sensores TFG/new_photo.jpg',\n    }\n}\n\nmsg.payload = \"Te adjunto la foto tomada\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1180,
+        "y": 1480,
+        "wires": [
+            [
+                "39596db0944033b7"
+            ]
+        ]
+    },
+    {
+        "id": "cdcac3620af40e9e",
+        "type": "e-mail",
+        "z": "04bc6f12557dfa13",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "fmv576@inlumine.ual.es",
+        "dname": "",
+        "x": 1550,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "39596db0944033b7",
+        "type": "delay",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1340,
+        "y": 1480,
+        "wires": [
+            [
+                "cdcac3620af40e9e"
+            ]
         ]
     },
     {
