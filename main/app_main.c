@@ -267,7 +267,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 				}
 				else ESP_LOGI(TAG, "Picture taken! Its size was: %d bytes", fb->len);
 
-				printf("Parametros de la imagen capturada:\nLongitud: %d\nAncho: %d\nAlto: %d\n\n", fb->len, fb->width, fb->height);
+				printf("Captured image's parameters:\nSize: %d\nWidth: %d\nHeight: %d\n\n", fb->len, fb->width, fb->height);
 
 				ret = esp_mqtt_client_publish(client, "ESP_CAM/photo", (char *)fb->buf, fb->len, 1, 0);
 				if(ret < 0) {
@@ -300,7 +300,9 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
         if (event->error_handle->error_type == MQTT_ERROR_TYPE_TCP_TRANSPORT) {
             log_error_if_nonzero("reported from esp-tls", event->error_handle->esp_tls_last_esp_err);
             log_error_if_nonzero("reported from tls stack", event->error_handle->esp_tls_stack_err);
-            log_error_if_nonzero("captured as transport's socket errno",  event->error_handle->esp_transport_sock_errno);
+            log_error_if_nonzero("
+				 
+				 d as transport's socket errno",  event->error_handle->esp_transport_sock_errno);
             ESP_LOGI(TAG, "Last errno string (%s)", strerror(event->error_handle->esp_transport_sock_errno));
 
         }
@@ -527,7 +529,7 @@ void app_main(void)
 		}
 		else ESP_LOGI(TAG, "Picture taken! Its size was: %d bytes", fb->len);
 
-		printf("Captured image's parameters:\nLongitud: %d\nAncho: %d\nAlto: %d\n\n", fb->len, fb->width, fb->height);
+		printf("Captured image's parameters:\nSize: %d\nWidth: %d\nHeight: %d\n\n", fb->len, fb->width, fb->height);
 
 		ret = esp_mqtt_client_publish(client, buffer, (char *)fb->buf, fb->len, 1, 0);
 		if(ret < 0) {
