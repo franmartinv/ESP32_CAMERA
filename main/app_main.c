@@ -1,3 +1,24 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+*
+* 		ESP32-CAM main project
+* 		----------------------
+*
+* 		In this project you can configure the ESP32-CAM and work with it. The driver is based on the official ESP32-CAM with the OV2640 sensor.
+*
+* 		Change the OV2640 sensor config with the 'camera_config_t' struct.
+*
+* 		Modify the MQTT broker IP using the 'idf.py menuconfig' as well as the Wifi config.
+*
+* 		This program is made to use with NodeRed. You can see the diagram flow in the current folder of this repository. Open 'NodeRed Flow' folder!!.
+* 		The capture images will appear on: 			C:\tfg-sensors-data\photos\
+*
+* 		NOTE: There is a principal parameter that is used to change the delay between two photo captures. You can change it modifying the parameter: "CAM_DELAY".
+*
+*
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+
+
 #include <time.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -42,26 +63,27 @@
 extern "C" {
 #endif
 
-#define				number_samples			5
-#define				MAX_DELAY			3600000		// 3600000 	milliseconds = 3600 seconds = 1 hour
-#define				MIN_DELAY			5000		// 5000		milliseconds = 5	seconds
-#define				DELAY_SIZE			20
-#define				TIMEZONE			2		// timezone-zone for spain: UTC +2
-#define				YEAR_OFFSET			1900
-#define				MONTH_OFFSET			1
+#define					MAC_LEN				7
+
+#define					number_samples		5
+#define					MAX_DELAY			3600000		// 3600000 	milliseconds = 3600 seconds = 1 hour
+#define					MIN_DELAY			5000		// 5000		milliseconds = 5	seconds
+#define					DELAY_SIZE			20
+#define					TIMEZONE			2			// timezone-zone for spain: UTC +2
+#define					YEAR_OFFSET			1900
+#define					MONTH_OFFSET		1
 
 static const char 		*TAG = "ESP_CAM_MQTT";
-static	int			GLOBAL_DELAY		=		MIN_DELAY;
-static 	int			CAM_DELAY		=		MIN_DELAY;
+static 	int				CAM_DELAY		=		1800000;	// Actual delay time between cams: 30 minutes
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 // ESP32Cam (AiThinker) PIN Map
-#define CAM_PIN_PWDN 		32
-#define CAM_PIN_RESET 		-1 //software reset will be performed
-#define CAM_PIN_XCLK 		0
-#define CAM_PIN_SIOD 		26
-#define CAM_PIN_SIOC 		27
+#define CAM_PIN_PWDN 	32
+#define CAM_PIN_RESET 	-1 //software reset will be performed
+#define CAM_PIN_XCLK 	0
+#define CAM_PIN_SIOD 	26
+#define CAM_PIN_SIOC 	27
 
 #define CAM_PIN_D7 		35
 #define CAM_PIN_D6 		34
@@ -71,9 +93,9 @@ static 	int			CAM_DELAY		=		MIN_DELAY;
 #define CAM_PIN_D2 		19
 #define CAM_PIN_D1 		18
 #define CAM_PIN_D0 		5
-#define CAM_PIN_VSYNC 		25
-#define CAM_PIN_HREF 		23
-#define CAM_PIN_PCLK 		22
+#define CAM_PIN_VSYNC 	25
+#define CAM_PIN_HREF 	23
+#define CAM_PIN_PCLK 	22
 
 
 static camera_config_t camera_config = {
@@ -95,23 +117,46 @@ static camera_config_t camera_config = {
 		.pin_href = CAM_PIN_HREF,
 		.pin_pclk = CAM_PIN_PCLK,
 
-		.xclk_freq_hz = 20000000,			//EXPERIMENTAL: Set to 16MHz on ESP32-S2 or ESP32-S3 to enable EDMA mode
+		.xclk_freq_hz = 20000000,				//EXPERIMENTAL: Set to 16MHz on ESP32-S2 or ESP32-S3 to enable EDMA mode
 		.ledc_timer = LEDC_TIMER_0,
 		.ledc_channel = LEDC_CHANNEL_0,
 
 		.pixel_format = PIXFORMAT_JPEG,			//YUV422,GRAYSCALE,RGB565,JPEG
 		.frame_size = FRAMESIZE_UXGA,			//QQVGA-QXGA Do not use sizes above QVGA when not JPEG
 
-		.jpeg_quality = 63, 				//0-63 lower number means higher quality
-		.fb_count = 1, 					//if more than one, i2s runs in continuous mode. Use only with JPEG
+		.jpeg_quality = 63, 					//0-63 lower number means higher quality
+		.fb_count = 1, 							//if more than one, i2s runs in continuous mode. Use only with JPEG
 		.grab_mode = CAMERA_GRAB_WHEN_EMPTY		//CAMERA_GRAB_LATEST. Sets when buffers should be filled
 };
 
 
-#define	FRAMESIZE_STRING			"0"
+#define	FRAMESIZE_STRING					"0"
 #define ENABLE_EXTERNAL_FLASH_STORAGE		0
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+/**
+ * @brief		Function to compare mac_base string with ID of ESP32-CAM
+ *
+ * @param[in]	*mac_base	:	(char) pointer to string that contains the mac_base address of the device
+ *
+ */
+uint8_t get_id_from_mac(char *mac_base) {
+	uint8_t		MAC_1[6] = {244, 207, 162, 152, 237, 96};
+	uint8_t		MAC_2[6] = {244, 207, 162, 154, 18, 232};
+	char		TOPIC_ID_1[6], TOPIC_ID_2[6], MAC_copy[6];
+
+	memcpy(TOPIC_ID_1, MAC_1, MAC_LEN-1);
+	memcpy(TOPIC_ID_2, MAC_2, MAC_LEN-1);
+	memcpy(MAC_copy, mac_base, MAC_LEN-1);
+
+	if (memcmp(TOPIC_ID_1, MAC_copy, MAC_LEN-2) == 0) return 1; //memcmp ( TOPIC_ID_1, mac_base,MAC_LEN )
+
+	else if (memcmp(TOPIC_ID_2, MAC_copy, MAC_LEN-2) == 0) return 2;
+
+	else return 0;
+}
 
 
 static void log_error_if_nonzero(const char *message, int error_code)
@@ -126,10 +171,10 @@ static void log_error_if_nonzero(const char *message, int error_code)
  *
  *  		This function is called by the MQTT client event loop.
  *
- * @param[in] 	handler_args		: 	user data registered to the event.
- * @param[in] 	base			:	Event base for the handler(always MQTT Base in this example).
- * @param[in] 	event_id 		:	The id for the received event.
- * @param[in] 	event_data 		:	The data for the event, esp_mqtt_event_handle_t.
+ * @param[in] handler_args	: 	user data registered to the event.
+ * @param[in] base			:	Event base for the handler(always MQTT Base in this example).
+ * @param[in] event_id 		:	The id for the received event.
+ * @param[in] event_data 	:	The data for the event, esp_mqtt_event_handle_t.
  *
  */
 static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
@@ -155,9 +200,6 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 
 		msg_id = esp_mqtt_client_subscribe(client, "ESP_CAM/photo", 1);
 		ESP_LOGI(TAG, "sent subscribe to ESP_CAM/photo successful!!, msg_id = %d", msg_id);
-
-		msg_id = esp_mqtt_client_subscribe(client, "ESP_CAM/delay", 1);
-		ESP_LOGI(TAG, "sent subscribe to ESP_CAM/delay successful!!, msg_id = %d", msg_id);
         break;
     case MQTT_EVENT_DISCONNECTED:
         ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");
@@ -248,7 +290,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 				CAM_DELAY = MIN_DELAY;
 			}
 
-			ESP_LOGI(TAG, "DELAY SELECTED: %d", GLOBAL_DELAY);
+			ESP_LOGI(TAG, "DELAY SELECTED: %d", CAM_DELAY);
         }
 
 
@@ -270,100 +312,8 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 }
 
 
-/*
- * @brief	Obtain online time data
- *
- */
-void initialize_sntp()
-{
-	ESP_LOGI(TAG, "Initializing SNTP");
-	sntp_setoperatingmode(SNTP_OPMODE_POLL);
-	sntp_setservername(0, "es.pool.ntp.org");
-	ESP_LOGI(TAG, "Notification of a time synchronization event");
-	sntp_set_sync_mode(SNTP_SYNC_MODE_IMMED);
-
-	sntp_init();
-}
-
-
-/*
- * @brief	Obtain local time data from SNTP server
- *
- */
-void obtain_time()
-{
-	time_t	now = 0;
-	struct tm timeinfo = {0};
-	int retry = 0;
-	const int retry_count = 2;		// delay seconds to obtain the current date/time data
-
-	while(sntp_get_sync_status() == SNTP_SYNC_STATUS_RESET && ++retry < retry_count) {
-		ESP_LOGI(TAG, "Waiting for system time to be set... (%d/%d)", retry, retry_count);
-		vTaskDelay(2000/portTICK_RATE_MS);
-	}
-
-	time(&now);
-	localtime_r(&now, &timeinfo);		// Obtain the local time of the machine and write a function to save it on -> timeinfo
-
-}
-
-
-/*
- * @brief	Send data time function by mqtt
- *
- */
-void send_mqtt_time_data(esp_mqtt_client_handle_t client, int sec, int min, int hour, int day, int month, int year)
-{
-	char			*topic;
-	char 			mqtt_data[100];
-	esp_err_t		ret;
-
-	sprintf(mqtt_data, "%d", year+YEAR_OFFSET);
-	topic = "sensor/time/year";
-	ret = esp_mqtt_client_publish(client, topic, mqtt_data, 0, 1, 0);
-		if(ret == -1) {
-			printf("ERROR sending data to topic %s\n", topic);
-		}
-
-	sprintf(mqtt_data, "%d", month+MONTH_OFFSET);
-	topic = "sensor/time/month";
-	ret = esp_mqtt_client_publish(client, topic, mqtt_data, 0, 1, 0);
-		if(ret == -1) {
-			printf("ERROR sending data to topic %s\n", topic);
-		}
-
-	sprintf(mqtt_data, "%d", day);
-	topic = "sensor/time/day";
-	ret = esp_mqtt_client_publish(client, topic, mqtt_data, 0, 1, 0);
-		if(ret == -1) {
-			printf("ERROR sending data to topic %s\n", topic);
-		}
-
-	sprintf(mqtt_data, "%d", hour);
-	topic = "sensor/time/hour";
-	ret = esp_mqtt_client_publish(client, topic, mqtt_data, 0, 1, 0);
-		if(ret == -1) {
-			printf("ERROR sending data to topic %s\n", topic);
-		}
-
-	sprintf(mqtt_data, "%d", min);
-	topic = "sensor/time/min";
-	ret = esp_mqtt_client_publish(client, topic, mqtt_data, 0, 1, 0);
-		if(ret == -1) {
-			printf("ERROR sending data to topic %s\n", topic);
-		}
-
-	sprintf(mqtt_data, "%d", sec);
-	topic = "sensor/time/sec";
-	ret = esp_mqtt_client_publish(client, topic, mqtt_data, 0, 1, 0);
-		if(ret == -1) {
-			printf("ERROR sending data to topic %s\n", topic);
-		}
-}
-
-
 /**
- * @brief	Camera initialition
+ * @brief		Camera initialition
  *
  */
 esp_err_t	init_camera()
@@ -385,7 +335,7 @@ esp_err_t	init_camera()
 
 
 /**
- * @brief	Function for enable SPIFFS external storage. This enables the storage in a external flash.
+ * @brief		Function for enable SPIFFS external storage. This enables the storage in a external flash.
  *
  */
 esp_err_t SPIFFS_external_storage(char * partition_label, char * base_path)
@@ -431,10 +381,12 @@ esp_err_t SPIFFS_external_storage(char * partition_label, char * base_path)
 
 void app_main(void)
 {
-	wifi_ap_record_t	ap_info;
-	esp_err_t		ret;
-	char			*topic;
-	char			strftime_buf[64];
+	wifi_ap_record_t			ap_info;
+	esp_err_t					ret;
+	char						mac_address[MAC_LEN];
+	uint8_t	 					mac_base[MAC_LEN] = {0};
+	uint8_t 					mac_local_base[MAC_LEN];
+	uint8_t 					mac_uni_base[MAC_LEN] = {0};
 
     ESP_LOGI(TAG, "[APP] Startup..");
     ESP_LOGI(TAG, "[APP] Free memory: %d bytes", esp_get_free_heap_size());
@@ -504,18 +456,6 @@ void app_main(void)
      */
     ESP_ERROR_CHECK(example_connect());
 
-    // SNTP configuring
-
-		time_t now;
-		struct tm timeinfo;
-		time(&now);
-		localtime_r(&now, &timeinfo);
-
-		sntp_servermode_dhcp(1);	// Set 1 if you want to request that the servers to be used for SNTP should be requested from the DHCP. Set 0 to not
-		initialize_sntp();			// Function to initialize sntp and obtain online time data from server
-
-	// end SNTP configuring
-
     // Initialition of mqtt
 
     esp_mqtt_client_config_t mqtt_cfg = {
@@ -558,6 +498,28 @@ void app_main(void)
     vTaskDelay(1000/portTICK_RATE_MS);
 
     while(1) {
+    	// Functions to obtain MAC address
+    	esp_efuse_mac_get_default(mac_base);
+		esp_read_mac(mac_base, ESP_MAC_WIFI_STA);
+		esp_derive_local_mac(mac_local_base, mac_uni_base);
+
+		memcpy(mac_address, mac_base, MAC_LEN-1);
+
+		// Uncomment to show the MAC address of the device
+		//printf("MAC address device: %d-%d-%d-%d-%d-%d\n", mac_address[0],mac_address[1],mac_address[2],mac_address[3],mac_address[4],mac_address[5]);
+
+		uint8_t topic_id = get_id_from_mac(&mac_address[MAC_LEN]);
+
+		char *num;
+		char buffer[100];
+
+		if(asprintf(&num, "%d", topic_id) == -1) {
+			perror("asprintf");
+		} else {
+			strcat(strcpy(buffer, "ESP_CAM/photo/"), num);
+			printf("%s\n", buffer);
+		}
+
     	// Function to take a photo
 		camera_fb_t * fb = esp_camera_fb_get();
 		if (!fb) {
@@ -565,14 +527,13 @@ void app_main(void)
 		}
 		else ESP_LOGI(TAG, "Picture taken! Its size was: %d bytes", fb->len);
 
-		printf("Parametros de la imagen capturada:\nLongitud: %d\nAncho: %d\nAlto: %d\n\n", fb->len, fb->width, fb->height);
+		printf("Captured image's parameters:\nLongitud: %d\nAncho: %d\nAlto: %d\n\n", fb->len, fb->width, fb->height);
 
-		topic = "ESP_CAM/take_photo";
-		ret = esp_mqtt_client_publish(client, topic, (char *)fb->buf, fb->len, 1, 0);
+		ret = esp_mqtt_client_publish(client, buffer, (char *)fb->buf, fb->len, 1, 0);
 		if(ret < 0) {
 			ESP_LOGE(TAG, "FAIL sending photo data!!");
 		}
-		else ESP_LOGI(TAG, "Photo data sended successful");
+		else ESP_LOGI(TAG, "Photo data sent successful");
 
 		//return the frame buffer back to the driver for reuse
 		esp_camera_fb_return(fb);
@@ -580,19 +541,6 @@ void app_main(void)
 		vTaskDelay(100/portTICK_RATE_MS);
 
 		// End of taking photo
-
-    	// Function for obtain current time
-		obtain_time();
-		time(&now);
-
-		setenv("TZ", "EST-2CEST,M6.3.0/2,M12.3.0", 1);
-		tzset();
-		localtime_r(&now, &timeinfo);
-		strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-		ESP_LOGI(TAG, "The current date/time in Almeria is: %s", strftime_buf);
-		// end of function of obtaining current date/time in Almeria
-
-		send_mqtt_time_data(client, timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_mday, timeinfo.tm_mon, timeinfo.tm_year);
 
 		ret = esp_wifi_sta_get_ap_info(&ap_info);
 		if(ret != ESP_OK) {
@@ -607,8 +555,6 @@ void app_main(void)
 				vTaskDelay(4000/portTICK_RATE_MS);
 			} while(ap_info.rssi == 0);
 		}
-
-		//GLOBAL_DELAY = atof(event->data);
 
 		vTaskDelay(CAM_DELAY/portTICK_RATE_MS);
 

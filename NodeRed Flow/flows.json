@@ -987,7 +987,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 240,
-        "y": 1100,
+        "y": 1080,
         "wires": [
             [
                 "efee44730223ee1e"
@@ -1008,7 +1008,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 240,
-        "y": 1160,
+        "y": 1140,
         "wires": [
             [
                 "f567f69e45ca487c"
@@ -1029,7 +1029,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 240,
-        "y": 1220,
+        "y": 1200,
         "wires": [
             [
                 "9a1ef2a4c69c5689"
@@ -1050,7 +1050,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 240,
-        "y": 1280,
+        "y": 1260,
         "wires": [
             [
                 "48487c587bfa638b"
@@ -1071,7 +1071,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 250,
-        "y": 1340,
+        "y": 1320,
         "wires": [
             [
                 "0bd3e60a87a14b7a"
@@ -1092,7 +1092,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 250,
-        "y": 1400,
+        "y": 1380,
         "wires": [
             [
                 "0df602ec926a7806"
@@ -1110,7 +1110,7 @@
         "overwriteFile": "false",
         "encoding": "none",
         "x": 540,
-        "y": 1100,
+        "y": 1080,
         "wires": [
             []
         ]
@@ -1126,7 +1126,7 @@
         "overwriteFile": "false",
         "encoding": "none",
         "x": 540,
-        "y": 1160,
+        "y": 1140,
         "wires": [
             []
         ]
@@ -1142,7 +1142,7 @@
         "overwriteFile": "false",
         "encoding": "none",
         "x": 530,
-        "y": 1220,
+        "y": 1200,
         "wires": [
             []
         ]
@@ -1158,7 +1158,7 @@
         "overwriteFile": "false",
         "encoding": "none",
         "x": 540,
-        "y": 1280,
+        "y": 1260,
         "wires": [
             []
         ]
@@ -1174,7 +1174,7 @@
         "overwriteFile": "false",
         "encoding": "none",
         "x": 550,
-        "y": 1340,
+        "y": 1320,
         "wires": [
             []
         ]
@@ -1190,7 +1190,7 @@
         "overwriteFile": "false",
         "encoding": "none",
         "x": 550,
-        "y": 1400,
+        "y": 1380,
         "wires": [
             []
         ]
@@ -1200,7 +1200,7 @@
         "type": "mqtt in",
         "z": "04bc6f12557dfa13",
         "name": "",
-        "topic": "ESP_CAM/take_photo",
+        "topic": "ESP_CAM/photo_CAM1",
         "qos": "1",
         "datatype": "base64",
         "broker": "3ca2c8c16187c816",
@@ -1208,8 +1208,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 280,
-        "y": 1520,
+        "x": 290,
+        "y": 1860,
         "wires": [
             [
                 "03b45537dcec751d"
@@ -1251,7 +1251,7 @@
             "parameters": []
         },
         "x": 530,
-        "y": 1520,
+        "y": 1860,
         "wires": [
             [
                 "ae5a6202e5ab180e"
@@ -1268,13 +1268,12 @@
         "dataType": "msg",
         "active": true,
         "x": 710,
-        "y": 1520,
+        "y": 1860,
         "wires": [
             [
                 "2e890e8635438b78",
-                "d1990aff502d83d5",
-                "a4b25c06c04549ab",
-                "0b60b16ab570634f"
+                "0b60b16ab570634f",
+                "d8138e69d1a84b86"
             ]
         ]
     },
@@ -1286,7 +1285,7 @@
         "data": "payload",
         "dataType": "msg",
         "ret": "img",
-        "parameter1": "C:\\tfg-sensors-data\\new_photo.jpg",
+        "parameter1": "C:\\tfg-sensors-data\\new_photo1.jpg",
         "parameter1Type": "str",
         "parameter2": "true",
         "parameter2Type": "bool",
@@ -1319,95 +1318,27 @@
                 }
             ]
         },
-        "x": 980,
-        "y": 1460,
+        "x": 960,
+        "y": 1800,
         "wires": [
             []
         ],
         "icon": "font-awesome/fa-image"
-    },
-    {
-        "id": "d1990aff502d83d5",
-        "type": "jimp-image",
-        "z": "04bc6f12557dfa13",
-        "name": "new_photo.bmp",
-        "data": "payload",
-        "dataType": "msg",
-        "ret": "img",
-        "parameter1": "C:\\tfg-sensors-data\\new_photo.bmp",
-        "parameter1Type": "str",
-        "parameter2": "true",
-        "parameter2Type": "bool",
-        "parameter3": "0",
-        "parameter3Type": "str",
-        "parameter4": "RESIZE_NEAREST_NEIGHBOR",
-        "parameter4Type": "Jimp",
-        "parameter5": "",
-        "parameter5Type": "",
-        "parameter6": "",
-        "parameter6Type": "",
-        "parameter7": "",
-        "parameter7Type": "",
-        "parameter8": "",
-        "parameter8Type": "",
-        "sendProperty": "payload",
-        "parameterCount": 1,
-        "jimpFunction": "write",
-        "selectedJimpFunction": {
-            "name": "write",
-            "fn": "write",
-            "description": "Write to file. NOTE: You can specify an alternative file extension type to change the type. Currently support types are jpg, png, bmp.",
-            "parameters": [
-                {
-                    "name": "filename",
-                    "type": "str",
-                    "required": true,
-                    "hint": "Name of the file",
-                    "defaultType": "str"
-                }
-            ]
-        },
-        "x": 980,
-        "y": 1520,
-        "wires": [
-            []
-        ],
-        "icon": "font-awesome/fa-image"
-    },
-    {
-        "id": "a4b25c06c04549ab",
-        "type": "ui_template",
-        "z": "04bc6f12557dfa13",
-        "group": "955b55d5e2732a9a",
-        "name": "See photo in Dashboard",
-        "order": 0,
-        "width": "0",
-        "height": "0",
-        "format": "<body>\n<script>\nsetInterval(function(){\n    $(\"#myimg\").attr(\"src\", \"path to your image w.r.t. httpStatic?\"+new \n     Date().getTime());\n     },10000);\n</script>\n<p align='center' id=\"box\">\n    <img src={{msg.payload}} width=\"100%\">\n</p>\n</body>",
-        "storeOutMessages": true,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 1010,
-        "y": 1420,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "0b60b16ab570634f",
         "type": "function",
         "z": "04bc6f12557dfa13",
+        "d": true,
         "name": "",
-        "func": "msg = {\n    attachments : {\n        filename: 'photo.jpg',\n        path: 'C:/Users/fmart/Desktop/Datos sensores TFG/new_photo.jpg',\n    }\n}\n\nmsg.payload = \"Te adjunto la foto tomada\";\n\nreturn msg;",
+        "func": "msg = {\n    attachments : {\n        filename: 'photo.jpg',\n        path: 'C:/tfg-sensors-data/new_photo1.jpg',\n    }\n}\n\nmsg.payload = \"Te adjunto la foto tomada\";\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1180,
-        "y": 1480,
+        "x": 1120,
+        "y": 1920,
         "wires": [
             [
                 "39596db0944033b7"
@@ -1418,20 +1349,22 @@
         "id": "cdcac3620af40e9e",
         "type": "e-mail",
         "z": "04bc6f12557dfa13",
+        "d": true,
         "server": "smtp.gmail.com",
         "port": "465",
         "secure": true,
         "tls": true,
         "name": "fmv576@inlumine.ual.es",
         "dname": "",
-        "x": 1550,
-        "y": 1480,
+        "x": 1610,
+        "y": 1920,
         "wires": []
     },
     {
         "id": "39596db0944033b7",
         "type": "delay",
         "z": "04bc6f12557dfa13",
+        "d": true,
         "name": "",
         "pauseType": "delay",
         "timeout": "5",
@@ -1446,10 +1379,579 @@
         "allowrate": false,
         "outputs": 1,
         "x": 1340,
-        "y": 1480,
+        "y": 1920,
         "wires": [
             [
                 "cdcac3620af40e9e"
+            ]
+        ]
+    },
+    {
+        "id": "bbe9e96da128d5ad",
+        "type": "jimp-image",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "ret": "img",
+        "parameter1": "filename",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 1,
+        "jimpFunction": "write",
+        "selectedJimpFunction": {
+            "name": "write",
+            "fn": "write",
+            "description": "Write to file. NOTE: You can specify an alternative file extension type to change the type. Currently support types are jpg, png, bmp.",
+            "parameters": [
+                {
+                    "name": "filename",
+                    "type": "str",
+                    "required": true,
+                    "hint": "Name of the file",
+                    "defaultType": "str"
+                }
+            ]
+        },
+        "x": 1550,
+        "y": 1860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d8138e69d1a84b86",
+        "type": "counter",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "init": "0",
+        "step": "1",
+        "lower": "",
+        "upper": "",
+        "mode": "increment",
+        "outputs": "1",
+        "x": 940,
+        "y": 1860,
+        "wires": [
+            [
+                "46910c42edd68cf5"
+            ]
+        ]
+    },
+    {
+        "id": "bb9fe43f312e293b",
+        "type": "function",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "func": "var now = new Date();\n// Create formatted time\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\n\npath = \"c:/tfg-sensors-data/photos/CAM1/\" + \"photo_num\" + msg.count + \"-\" + yyyy + \"-\" + mm + \"-\" + dd + \"_\" + hh + \"h-\" + mmm + \"min-\" + ss + \"sec.jpg\";\nmsg.filename = path;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 1860,
+        "wires": [
+            [
+                "bbe9e96da128d5ad"
+            ]
+        ]
+    },
+    {
+        "id": "46910c42edd68cf5",
+        "type": "timestamp",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "x": 1130,
+        "y": 1860,
+        "wires": [
+            [
+                "bb9fe43f312e293b"
+            ]
+        ]
+    },
+    {
+        "id": "8e67b6f926ebb621",
+        "type": "mqtt in",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "topic": "ESP_CAM/photo_CAM2",
+        "qos": "1",
+        "datatype": "base64",
+        "broker": "3ca2c8c16187c816",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 2140,
+        "wires": [
+            [
+                "88765be978b3a39b"
+            ]
+        ]
+    },
+    {
+        "id": "88765be978b3a39b",
+        "type": "jimp-image",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "ret": "b64",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 530,
+        "y": 2140,
+        "wires": [
+            [
+                "340fd6c674c2a2bc"
+            ]
+        ]
+    },
+    {
+        "id": "340fd6c674c2a2bc",
+        "type": "image viewer",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "width": "600",
+        "data": "payload",
+        "dataType": "msg",
+        "active": true,
+        "x": 710,
+        "y": 2140,
+        "wires": [
+            [
+                "f7a5048076c36758",
+                "d5c8c0fed35b6e0f",
+                "51349a2bb93ce764"
+            ]
+        ]
+    },
+    {
+        "id": "f7a5048076c36758",
+        "type": "jimp-image",
+        "z": "04bc6f12557dfa13",
+        "name": "new_photo.jpg",
+        "data": "payload",
+        "dataType": "msg",
+        "ret": "img",
+        "parameter1": "C:\\tfg-sensors-data\\new_photo2.jpg",
+        "parameter1Type": "str",
+        "parameter2": "true",
+        "parameter2Type": "bool",
+        "parameter3": "0",
+        "parameter3Type": "str",
+        "parameter4": "RESIZE_NEAREST_NEIGHBOR",
+        "parameter4Type": "Jimp",
+        "parameter5": "",
+        "parameter5Type": "",
+        "parameter6": "",
+        "parameter6Type": "",
+        "parameter7": "",
+        "parameter7Type": "",
+        "parameter8": "",
+        "parameter8Type": "",
+        "sendProperty": "payload",
+        "parameterCount": 1,
+        "jimpFunction": "write",
+        "selectedJimpFunction": {
+            "name": "write",
+            "fn": "write",
+            "description": "Write to file. NOTE: You can specify an alternative file extension type to change the type. Currently support types are jpg, png, bmp.",
+            "parameters": [
+                {
+                    "name": "filename",
+                    "type": "str",
+                    "required": true,
+                    "hint": "Name of the file",
+                    "defaultType": "str"
+                }
+            ]
+        },
+        "x": 960,
+        "y": 2080,
+        "wires": [
+            []
+        ],
+        "icon": "font-awesome/fa-image"
+    },
+    {
+        "id": "d5c8c0fed35b6e0f",
+        "type": "function",
+        "z": "04bc6f12557dfa13",
+        "d": true,
+        "name": "",
+        "func": "msg = {\n    attachments : {\n        filename: 'photo.jpg',\n        path: 'C:/tfg-sensors-data/new_photo2.jpg',\n    }\n}\n\nmsg.payload = \"Te adjunto la foto tomada\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 2200,
+        "wires": [
+            [
+                "2bc0decb8105a35d"
+            ]
+        ]
+    },
+    {
+        "id": "80eb4c1daef60c3f",
+        "type": "e-mail",
+        "z": "04bc6f12557dfa13",
+        "d": true,
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "fmv576@inlumine.ual.es",
+        "dname": "",
+        "x": 1610,
+        "y": 2200,
+        "wires": []
+    },
+    {
+        "id": "2bc0decb8105a35d",
+        "type": "delay",
+        "z": "04bc6f12557dfa13",
+        "d": true,
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1340,
+        "y": 2200,
+        "wires": [
+            [
+                "80eb4c1daef60c3f"
+            ]
+        ]
+    },
+    {
+        "id": "a71cb65e7d9b6815",
+        "type": "jimp-image",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "ret": "img",
+        "parameter1": "filename",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 1,
+        "jimpFunction": "write",
+        "selectedJimpFunction": {
+            "name": "write",
+            "fn": "write",
+            "description": "Write to file. NOTE: You can specify an alternative file extension type to change the type. Currently support types are jpg, png, bmp.",
+            "parameters": [
+                {
+                    "name": "filename",
+                    "type": "str",
+                    "required": true,
+                    "hint": "Name of the file",
+                    "defaultType": "str"
+                }
+            ]
+        },
+        "x": 1550,
+        "y": 2140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "51349a2bb93ce764",
+        "type": "counter",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "init": "0",
+        "step": "1",
+        "lower": "",
+        "upper": "",
+        "mode": "increment",
+        "outputs": "1",
+        "x": 940,
+        "y": 2140,
+        "wires": [
+            [
+                "92ec99a792f8b501"
+            ]
+        ]
+    },
+    {
+        "id": "f4ef626661ab7262",
+        "type": "function",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "func": "var now = new Date();\n// Create formatted time\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\n\npath = \"c:/tfg-sensors-data/photos/CAM2/\" + \"photo_num\" + msg.count + \"-\" + yyyy + \"-\" + mm + \"-\" + dd + \"_\" + hh + \"h-\" + mmm + \"min-\" + ss + \"sec.jpg\";\nmsg.filename = path;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1340,
+        "y": 2140,
+        "wires": [
+            [
+                "a71cb65e7d9b6815"
+            ]
+        ]
+    },
+    {
+        "id": "92ec99a792f8b501",
+        "type": "timestamp",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "x": 1130,
+        "y": 2140,
+        "wires": [
+            [
+                "f4ef626661ab7262"
+            ]
+        ]
+    },
+    {
+        "id": "b3fefe24169887fc",
+        "type": "mqtt in",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "topic": "ESP_CAM/photo/#",
+        "qos": "1",
+        "datatype": "base64",
+        "broker": "3ca2c8c16187c816",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 270,
+        "y": 1580,
+        "wires": [
+            [
+                "dba466f25e1871f5",
+                "f79dfd3a48bf99e0"
+            ]
+        ]
+    },
+    {
+        "id": "6dfcf3650d3ffbf8",
+        "type": "jimp-image",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "ret": "b64",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 670,
+        "y": 1580,
+        "wires": [
+            [
+                "a4ca34fbcdba921f"
+            ]
+        ]
+    },
+    {
+        "id": "2a2508b680568652",
+        "type": "jimp-image",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "data": "payload",
+        "dataType": "msg",
+        "ret": "img",
+        "parameter1": "filename",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 1,
+        "jimpFunction": "write",
+        "selectedJimpFunction": {
+            "name": "write",
+            "fn": "write",
+            "description": "Write to file. NOTE: You can specify an alternative file extension type to change the type. Currently support types are jpg, png, bmp.",
+            "parameters": [
+                {
+                    "name": "filename",
+                    "type": "str",
+                    "required": true,
+                    "hint": "Name of the file",
+                    "defaultType": "str"
+                }
+            ]
+        },
+        "x": 1270,
+        "y": 1580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5a3911c0b395b29a",
+        "type": "function",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "func": "var mac_add = msg.MAC;\n\nvar now = new Date();\n// Create formatted time\nvar yyyy = now.getFullYear();\nvar mm = now.getMonth() < 9 ? \"0\" + (now.getMonth() + 1) : (now.getMonth() + 1); // getMonth() is zero-based\nvar dd  = now.getDate() < 10 ? \"0\" + now.getDate() : now.getDate();\nvar hh = now.getHours() < 10 ? \"0\" + now.getHours() : now.getHours();\nvar mmm  = now.getMinutes() < 10 ? \"0\" + now.getMinutes() : now.getMinutes();\nvar ss  = now.getSeconds() < 10 ? \"0\" + now.getSeconds() : now.getSeconds();\n\npath = \"c:/tfg-sensors-data/photos/CAM_\" + msg.device_id + \"/\" + yyyy + \"-\" + mm + \"-\" + dd + \"_\" + hh + \"h-\" + mmm + \"min-\" + ss + \"sec.jpg\";\nmsg.filename = path;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 1580,
+        "wires": [
+            [
+                "2a2508b680568652"
+            ]
+        ]
+    },
+    {
+        "id": "a4ca34fbcdba921f",
+        "type": "timestamp",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "x": 870,
+        "y": 1580,
+        "wires": [
+            [
+                "5a3911c0b395b29a"
+            ]
+        ]
+    },
+    {
+        "id": "dba466f25e1871f5",
+        "type": "debug",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 1520,
+        "wires": []
+    },
+    {
+        "id": "f79dfd3a48bf99e0",
+        "type": "function",
+        "z": "04bc6f12557dfa13",
+        "name": "",
+        "func": "var num = msg.topic;\n\nmsg.device_id = num.substring(14,18);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 1580,
+        "wires": [
+            [
+                "6dfcf3650d3ffbf8"
             ]
         ]
     },
@@ -1623,17 +2125,6 @@
         "className": ""
     },
     {
-        "id": "955b55d5e2732a9a",
-        "type": "ui_group",
-        "name": "Last Photo Taked",
-        "tab": "a6cc85cf27bc02cc",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
-    },
-    {
         "id": "044d580742694411",
         "type": "ui_tab",
         "name": "Sensor's Dashboard",
@@ -1684,15 +2175,6 @@
         "name": "Sensor variables on charts",
         "icon": "dashboard",
         "order": 6,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "a6cc85cf27bc02cc",
-        "type": "ui_tab",
-        "name": "Last Photo",
-        "icon": "dashboard",
-        "order": 7,
         "disabled": false,
         "hidden": false
     }
