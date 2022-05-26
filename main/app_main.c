@@ -15,6 +15,11 @@
 * 		NOTE: There is a principal parameter that is used to change the delay between two photo captures. You can change it modifying the parameter: "CAM_DELAY".
 *
 *
+* 		Francisco Martín Villegas
+* 		Electronic Industry and Automatic Engineering
+* 		University of Almería, 2022
+*
+*
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 
@@ -300,9 +305,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
         if (event->error_handle->error_type == MQTT_ERROR_TYPE_TCP_TRANSPORT) {
             log_error_if_nonzero("reported from esp-tls", event->error_handle->esp_tls_last_esp_err);
             log_error_if_nonzero("reported from tls stack", event->error_handle->esp_tls_stack_err);
-            log_error_if_nonzero("
-				 
-				 d as transport's socket errno",  event->error_handle->esp_transport_sock_errno);
+            log_error_if_nonzero("captured as transport's socket errno",  event->error_handle->esp_transport_sock_errno);
             ESP_LOGI(TAG, "Last errno string (%s)", strerror(event->error_handle->esp_transport_sock_errno));
 
         }
@@ -500,6 +503,15 @@ void app_main(void)
     vTaskDelay(1000/portTICK_RATE_MS);
 
     while(1) {
+		if(ap_info.rssi == 0) {
+			do {
+				ESP_ERROR_CHECK(example_connect());
+				vTaskDelay(4000/portTICK_RATE_MS);
+			} while(ap_info.rssi == 0);
+		}
+
+		printf("Connecting power: %i [dB]\n\n", ap_info.rssi);
+
     	// Functions to obtain MAC address
     	esp_efuse_mac_get_default(mac_base);
 		esp_read_mac(mac_base, ESP_MAC_WIFI_STA);
@@ -547,15 +559,6 @@ void app_main(void)
 		ret = esp_wifi_sta_get_ap_info(&ap_info);
 		if(ret != ESP_OK) {
 			printf("ERROR reading wifi info....\n");
-		}
-
-		printf("Connecting power: %i [dB]\n\n", ap_info.rssi);
-
-		if(ap_info.rssi == 0) {
-			do {
-				ESP_ERROR_CHECK(example_connect());
-				vTaskDelay(4000/portTICK_RATE_MS);
-			} while(ap_info.rssi == 0);
 		}
 
 		vTaskDelay(CAM_DELAY/portTICK_RATE_MS);
