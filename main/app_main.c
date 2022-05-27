@@ -15,9 +15,9 @@
 * 		NOTE: There is a principal parameter that is used to change the delay between two photo captures. You can change it modifying the parameter: "CAM_DELAY".
 *
 *
-* 		Francisco Martín Villegas
+* 		Francisco MartÃ­n Villegas
 * 		Electronic Industry and Automatic Engineering
-* 		University of Almería, 2022
+* 		University of AlmerÃ­a, 2022
 *
 *
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -79,7 +79,7 @@ extern "C" {
 #define					MONTH_OFFSET		1
 
 static const char 		*TAG = "ESP_CAM_MQTT";
-static 	int				CAM_DELAY		=		5000;	// Actual delay time between cams: 30 minutes
+static 	int				CAM_DELAY		=		1200000;	// Actual delay time between cams: 20 minutes
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
