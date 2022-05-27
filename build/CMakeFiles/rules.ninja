@@ -1599,7 +1599,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp32-camera_
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = C:\.espressif\tools\cmake\3.20.3\bin\cmake.exe --regenerate-during-build -SC:\Users\fmart\Documents\EspIDF\ESP-CAM-MQTT -BC:\Users\fmart\Documents\EspIDF\ESP-CAM-MQTT\build
+  command = C:\.espressif\tools\cmake\3.20.3\bin\cmake.exe --regenerate-during-build -SC:\Users\fmart\Documents\EspIDF\ESP-CAM-MQTT-2 -BC:\Users\fmart\Documents\EspIDF\ESP-CAM-MQTT-2\build
   description = Re-running CMake...
   generator = 1
 

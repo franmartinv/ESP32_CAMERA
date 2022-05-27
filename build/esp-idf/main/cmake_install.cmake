@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/fmart/Documents/EspIDF/ESP-CAM-MQTT/main
+# Install script for directory: C:/Users/fmart/Documents/EspIDF/ESP-CAM-MQTT-2/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

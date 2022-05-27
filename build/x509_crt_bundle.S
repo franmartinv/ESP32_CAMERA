@@ -1,4 +1,4 @@
-/* * Data converted from C:/Users/fmart/Documents/EspIDF/ESP-CAM-MQTT/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from C:/Users/fmart/Documents/EspIDF/ESP-CAM-MQTT-2/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 .section .rodata.embedded

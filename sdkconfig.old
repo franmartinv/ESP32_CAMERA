@@ -1,3 +1,7 @@
+#
+# Automatically generated file. DO NOT EDIT.
+# Espressif IoT Development Framework (ESP-IDF) Project Configuration
+#
 CONFIG_IDF_CMAKE=y
 CONFIG_IDF_TARGET_ARCH_XTENSA=y
 CONFIG_IDF_TARGET="esp32"
@@ -127,7 +131,7 @@ CONFIG_PARTITION_TABLE_MD5=y
 #
 # Example Configuration
 #
-CONFIG_BROKER_URL="mqtt://192.168.166.66"
+CONFIG_BROKER_URL="mqtt://broker.hivemq.com"
 # end of Example Configuration
 
 #
@@ -136,8 +140,8 @@ CONFIG_BROKER_URL="mqtt://192.168.166.66"
 CONFIG_EXAMPLE_GPIO_RANGE_MIN=0
 CONFIG_EXAMPLE_GPIO_RANGE_MAX=33
 CONFIG_EXAMPLE_CONNECT_WIFI=y
-CONFIG_EXAMPLE_WIFI_SSID="vodafone15E0"
-CONFIG_EXAMPLE_WIFI_PASSWORD="GRZNUJNWMWMZQJ"
+CONFIG_EXAMPLE_WIFI_SSID="eduroam"
+CONFIG_EXAMPLE_WIFI_PASSWORD=""
 # CONFIG_EXAMPLE_WIFI_SCAN_METHOD_FAST is not set
 CONFIG_EXAMPLE_WIFI_SCAN_METHOD_ALL_CHANNEL=y
 
@@ -1342,6 +1346,11 @@ CONFIG_CAMERA_CORE0=y
 # CONFIG_CAMERA_CORE1 is not set
 # CONFIG_CAMERA_NO_AFFINITY is not set
 CONFIG_CAMERA_DMA_BUFFER_SIZE_MAX=32768
+# end of Camera configuration
+
+#
+# Camera configuration
+#
 # end of Camera configuration
 # end of Component config
 

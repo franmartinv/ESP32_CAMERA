@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/fmart/Documents/EspIDF/ESP-CAM-MQTT/components/esp32-camera
+# Install script for directory: C:/Users/fmart/Documents/EspIDF/ESP-CAM-MQTT-2/components/esp32-camera
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

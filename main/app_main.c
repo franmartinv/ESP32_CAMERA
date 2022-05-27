@@ -79,7 +79,7 @@ extern "C" {
 #define					MONTH_OFFSET		1
 
 static const char 		*TAG = "ESP_CAM_MQTT";
-static 	int				CAM_DELAY		=		1800000;	// Actual delay time between cams: 30 minutes
+static 	int				CAM_DELAY		=		5000;	// Actual delay time between cams: 30 minutes
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
