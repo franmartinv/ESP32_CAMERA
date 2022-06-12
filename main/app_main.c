@@ -70,25 +70,25 @@ extern "C" {
 
 #define					MAC_LEN				7
 
-#define					number_samples		5
+#define					number_samples			5
 #define					MAX_DELAY			3600000		// 3600000 	milliseconds = 3600 seconds = 1 hour
 #define					MIN_DELAY			5000		// 5000		milliseconds = 5	seconds
 #define					DELAY_SIZE			20
-#define					TIMEZONE			2			// timezone-zone for spain: UTC +2
+#define					TIMEZONE			2		// timezone-zone for spain: UTC +2
 #define					YEAR_OFFSET			1900
-#define					MONTH_OFFSET		1
+#define					MONTH_OFFSET			1
 
-static const char 		*TAG = "ESP_CAM_MQTT";
-static 	int				CAM_DELAY		=		1200000;	// Actual delay time between cams: 20 minutes
+static const char 			*TAG = "ESP_CAM_MQTT";
+static 	int				CAM_DELAY		=	1200000;	// Actual delay time between cams: 20 minutes
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 
 // ESP32Cam (AiThinker) PIN Map
-#define CAM_PIN_PWDN 	32
-#define CAM_PIN_RESET 	-1 //software reset will be performed
-#define CAM_PIN_XCLK 	0
-#define CAM_PIN_SIOD 	26
-#define CAM_PIN_SIOC 	27
+#define CAM_PIN_PWDN 		32
+#define CAM_PIN_RESET 		-1 //software reset will be performed
+#define CAM_PIN_XCLK 		0
+#define CAM_PIN_SIOD 		26
+#define CAM_PIN_SIOC 		27
 
 #define CAM_PIN_D7 		35
 #define CAM_PIN_D6 		34
@@ -98,9 +98,9 @@ static 	int				CAM_DELAY		=		1200000;	// Actual delay time between cams: 20 minu
 #define CAM_PIN_D2 		19
 #define CAM_PIN_D1 		18
 #define CAM_PIN_D0 		5
-#define CAM_PIN_VSYNC 	25
-#define CAM_PIN_HREF 	23
-#define CAM_PIN_PCLK 	22
+#define CAM_PIN_VSYNC 		25
+#define CAM_PIN_HREF 		23
+#define CAM_PIN_PCLK 		22
 
 
 static camera_config_t camera_config = {
@@ -135,7 +135,7 @@ static camera_config_t camera_config = {
 };
 
 
-#define	FRAMESIZE_STRING					"0"
+#define	FRAMESIZE_STRING			"0"
 #define ENABLE_EXTERNAL_FLASH_STORAGE		0
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -278,7 +278,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 				if(ret < 0) {
 					ESP_LOGE(TAG, "FAIL sending photo data!!");
 				}
-				else ESP_LOGI(TAG, "Photo data sended successful");
+				else ESP_LOGI(TAG, "Photo data sent successful");
 
 				//return the frame buffer back to the driver for reuse
 				esp_camera_fb_return(fb);
