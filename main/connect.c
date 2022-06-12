@@ -38,7 +38,7 @@
 // 		Wifi password and username
 
 
-#define EXAMPLE_EAP_ID 				"tic019CC"
+#define EXAMPLE_EAP_ID 			"tic019CC"
 #define EXAMPLE_EAP_USERNAME 		"tic019CC"
 #define EXAMPLE_EAP_PASSWORD 		"tic019UAL"
 
