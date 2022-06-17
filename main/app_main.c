@@ -122,15 +122,15 @@ static camera_config_t camera_config = {
 		.pin_href = CAM_PIN_HREF,
 		.pin_pclk = CAM_PIN_PCLK,
 
-		.xclk_freq_hz = 20000000,				//EXPERIMENTAL: Set to 16MHz on ESP32-S2 or ESP32-S3 to enable EDMA mode
+		.xclk_freq_hz = 20000000,			
 		.ledc_timer = LEDC_TIMER_0,
 		.ledc_channel = LEDC_CHANNEL_0,
 
 		.pixel_format = PIXFORMAT_JPEG,			//YUV422,GRAYSCALE,RGB565,JPEG
 		.frame_size = FRAMESIZE_UXGA,			//QQVGA-QXGA Do not use sizes above QVGA when not JPEG
 
-		.jpeg_quality = 63, 					//0-63 lower number means higher quality
-		.fb_count = 1, 							//if more than one, i2s runs in continuous mode. Use only with JPEG
+		.jpeg_quality = 63, 				//0-63 lower number means higher quality
+		.fb_count = 1, 					//if more than one, i2s runs in continuous mode. Use only with JPEG
 		.grab_mode = CAMERA_GRAB_WHEN_EMPTY		//CAMERA_GRAB_LATEST. Sets when buffers should be filled
 };
 
@@ -142,7 +142,7 @@ static camera_config_t camera_config = {
 
 
 /**
- * @brief		Function to compare mac_base string with ID of ESP32-CAM
+ * @brief	Function to compare mac_base string with ID of ESP32-CAM
  *
  * @param[in]	*mac_base	:	(char) pointer to string that contains the mac_base address of the device
  *
@@ -177,7 +177,7 @@ static void log_error_if_nonzero(const char *message, int error_code)
  *  		This function is called by the MQTT client event loop.
  *
  * @param[in] handler_args	: 	user data registered to the event.
- * @param[in] base			:	Event base for the handler(always MQTT Base in this example).
+ * @param[in] base		:	Event base for the handler(always MQTT Base in this example).
  * @param[in] event_id 		:	The id for the received event.
  * @param[in] event_data 	:	The data for the event, esp_mqtt_event_handle_t.
  *
@@ -280,7 +280,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 				}
 				else ESP_LOGI(TAG, "Photo data sent successful");
 
-				//return the frame buffer back to the driver for reuse
+				//return the frame buffer back to the driver
 				esp_camera_fb_return(fb);
         	}
         }
@@ -318,7 +318,7 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 
 
 /**
- * @brief		Camera initialition
+ * @brief	Camera initialition
  *
  */
 esp_err_t	init_camera()
@@ -340,7 +340,7 @@ esp_err_t	init_camera()
 
 
 /**
- * @brief		Function for enable SPIFFS external storage. This enables the storage in a external flash.
+ * @brief	Function for enable SPIFFS external storage. This enables the storage in a external flash.
  *
  */
 esp_err_t SPIFFS_external_storage(char * partition_label, char * base_path)
@@ -387,11 +387,11 @@ esp_err_t SPIFFS_external_storage(char * partition_label, char * base_path)
 void app_main(void)
 {
 	wifi_ap_record_t			ap_info;
-	esp_err_t					ret;
-	char						mac_address[MAC_LEN];
-	uint8_t	 					mac_base[MAC_LEN] = {0};
-	uint8_t 					mac_local_base[MAC_LEN];
-	uint8_t 					mac_uni_base[MAC_LEN] = {0};
+	esp_err_t				ret;
+	char					mac_address[MAC_LEN];
+	uint8_t	 				mac_base[MAC_LEN] = {0};
+	uint8_t 				mac_local_base[MAC_LEN];
+	uint8_t 				mac_uni_base[MAC_LEN] = {0};
 
     ESP_LOGI(TAG, "[APP] Startup..");
     ESP_LOGI(TAG, "[APP] Free memory: %d bytes", esp_get_free_heap_size());
