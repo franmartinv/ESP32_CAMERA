@@ -513,7 +513,7 @@ void app_main(void)
 		printf("Connecting power: %i [dB]\n\n", ap_info.rssi);
 
     	// Functions to obtain MAC address
-    	esp_efuse_mac_get_default(mac_base);
+    		esp_efuse_mac_get_default(mac_base);
 		esp_read_mac(mac_base, ESP_MAC_WIFI_STA);
 		esp_derive_local_mac(mac_local_base, mac_uni_base);
 
